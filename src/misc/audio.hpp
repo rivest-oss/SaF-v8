@@ -6,9 +6,7 @@
 
 namespace SxF {
 	typedef struct {
-		u32	rate;
 		u32	samples;
-		u16	channels;
 		i16	*data;
 	} audio_frame_t;
 
@@ -17,11 +15,16 @@ namespace SxF {
 			uintptr_t i_ptr = (uintptr_t)NULL;
 			char err_buff[128];
 
+			u32 a_rate = 0, a_channels = 0;
+
 		public:
 			ErrorOr<void> open(const char *filepath);
 			void close(void);
 
 			ErrorOr<audio_frame_t> get_frame(void);
+
+			u32 get_rate(void);
+			u32 get_channels(void);
 	};
 };
 

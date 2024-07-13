@@ -109,6 +109,9 @@ namespace SxF {
 			return Error { "Couldn't open the audio context" };
 		}
 
+		a_rate = (u32)(mp->c_frame->sample_rate);
+		a_channels = mp->codec_ctx->channels;
+
 		mp->av_frame = av_frame_alloc();
 		mp->c_frame = av_frame_alloc();
 		
@@ -189,6 +192,8 @@ namespace SxF {
 			avformat_close_input(&mp->fmt_ctx);
 		if(mp->swr_ctx != nullptr)
 			swr_free(&mp->swr_ctx);
+
+		a_rate = 0, a_channels = 0;
 		
 		delete mp;
 		i_ptr = (uintptr_t)nullptr;
@@ -247,9 +252,7 @@ namespace SxF {
 							mp->samples[i] = mp->c_frame->data[ch][bi];
 
 					return audio_frame_t {
-						(u32)mp->c_frame->sample_rate,
 						samples,
-						channels,
 						mp->samples
 					};
 				};
@@ -259,6 +262,14 @@ namespace SxF {
 		};
 		
 		return Error { "[TODO] while-out-process" };
+	};
+
+	u32 AudioStream::get_rate(void) {
+		return a_rate;
+	};
+
+	u32 AudioStream::get_channels(void) {
+		return a_channels;
 	};
 };
 
