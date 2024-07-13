@@ -11,12 +11,14 @@ CXXFLAGS	= `pkg-config libavcodec --cflags`
 CXXFLAGS	+= `pkg-config libavformat --cflags`
 CXXFLAGS	+= `pkg-config libavutil --cflags`
 CXXFLAGS	+= `pkg-config libswscale --cflags`
+CXXFLAGS	+= `pkg-config libswresample --cflags`
 
 LD			= $(CXX)
 LDFLAGS		= `pkg-config libavcodec --libs`
 LDFLAGS		+= `pkg-config libavformat --libs`
 LDFLAGS		+= `pkg-config libavutil --libs`
 LDFLAGS		+= `pkg-config libswscale --libs`
+LDFLAGS		+= `pkg-config libswresample --libs`
 
 CPPCHECK	= cppcheck
 CLANGXX		= clang++
